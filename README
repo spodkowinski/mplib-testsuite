@@ -1,0 +1,15 @@
+
+mplib testsuite README file
+===============================================================================
+
+This package provides a testsuite written in C for helping developing
+mplib. Don't excpect nice code or some cleverness, its just my prop to
+test the features of my current mplib build. Feel free to extend this
+programm if you like to develop.
+
+To build do the following:
+./configure --enable-build-dir=/your/path/mplib/src
+
+Then 'cd src' and start run the programm for some standard tests.
+You may also scan directory trees and verify if mplib works correctly
+on these files. Use the -s path option for that. 

@@ -1,0 +1,41 @@
+dnl Process this file with autoconf to produce a configure script.
+AC_INIT(src/mptestsuite.h)
+AM_INIT_AUTOMAKE(mptestsuite, 0.1)
+AM_CONFIG_HEADER(config.h)
+AC_SUBST(BUILDDIR)	
+
+dnl Checks for programs.
+AC_PROG_CC
+
+dnl General Options
+CFLAGS="$CFLAGS" 
+
+dnl Checks for header files and libs.
+AC_HEADER_STDC
+AC_CHECK_HEADERS(unistd.h strings.h)
+
+dnl Checks for typedefs, structures, and compiler characteristics.
+AC_C_CONST
+AC_TYPE_SIZE_T
+
+dnl compile time options
+AC_ARG_ENABLE(build-dir, [  --enable-build-dir        sets the directory where headers and binaries of the mplib build to test can be found])
+
+if test "$enable_build_dir"; then
+	if test "$enable_build_dir" = "yes"; then
+		AC_MSG_ERROR([Please provide a path when using the --enable-build-dir flag])
+	fi
+	BUILDDIR="$enable_build_dir"
+	
+	if test ! -d "$BUILDDIR"; then
+		AC_MSG_ERROR([$enable_build_dir is not a directory])
+	fi
+	AC_DEFINE_UNQUOTED(BUILDDIR, "$BUILDDIR")
+else
+AC_CHECK_LIB(mp, mp_get_tag_list_from_file, 
+	LIBS="$LIBS -lmp", AC_MSG_ERROR("You must have mplib installed on your system"))
+
+fi
+
+
+AC_OUTPUT(Makefile src/Makefile)
