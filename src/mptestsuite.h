@@ -123,6 +123,16 @@ mpt_scan __P((char*));
 void
 do_expr __P((char*, char*));
 
+
+void
+desc_dir __P((char*, unsigned int));
+
+int
+mpt_scan __P((char*));
+
+void
+do_expr __P((char*, char*));
+
 __END_DECLS
 
 #endif /* __MPTESTSUITE_H */
