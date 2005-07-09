@@ -89,9 +89,27 @@ main(int argc, char** args) {
   }
   close(curfd);
 
+  curfd = open("r_winamp_508_v2.mp3", O_RDONLY);
+  if(!mpt_check_readable(curfd, 2)) {
+    mpt_check_v2_winamp(curfd);
+  }
+  close(curfd);
+
   curfd = open("r_music_match_jukebox_v2.mp3", O_RDONLY);
   if(!mpt_check_readable(curfd, 2)) {
       mpt_check_v2_mmjukebox(curfd);
+  }
+  close(curfd);
+
+  curfd = open("r_music_match_jukebox_10_v2.mp3", O_RDONLY);
+  if(!mpt_check_readable(curfd, 2)) {
+      mpt_check_v2_mmjukebox(curfd);
+  }
+  close(curfd);
+
+  curfd = open("r_mediamonkey.mp3", O_RDONLY);
+  if(!mpt_check_readable(curfd, 2)) {
+      mpt_check_mediamonkey(curfd);
   }
   close(curfd);
 

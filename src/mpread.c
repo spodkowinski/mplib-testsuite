@@ -201,7 +201,7 @@ mpt_check_v2_winamp(int fd) {
   id3_text_content* text_content = NULL;
   id3_comment_content* comment_content = NULL;
 
-  curtest = "Reading winamp 2.73 v2 tag...";
+  curtest = "Reading winamp 2.73/5.0.8 v2 tag...";
 
   list = mp_get_tag_list_from_fd(fd);
   tag = list->tag;
@@ -240,7 +240,7 @@ mpt_check_v2_mmjukebox(int fd) {
   id3_text_content* text_content = NULL;
   id3_comment_content* comment_content = NULL;
 
-  curtest = "Reading music match jukebox 6 v2 tag...";
+  curtest = "Reading music match jukebox 6/10 v2 tag...";
 
   list = mp_get_tag_list_from_fd(fd);
   tag = list->tag;
@@ -311,6 +311,70 @@ mpt_check_v2_jokebox(int fd) {
 
   return 1;
 
+}
+
+
+int
+mpt_check_mediamonkey(int fd) {
+  id3_tag_list *list = NULL;
+  id3_tag* tag = NULL;
+  id3_content* content = NULL;
+  id3_text_content* text_content = NULL;
+  id3_comment_content* comment_content = NULL;
+
+  curtest = "Reading mediamonkey 2.3.1.845 v1 tag...";
+
+  list = mp_get_tag_list_from_fd(fd);
+  tag = list->tag;
+
+  CHECK_TEXT_CONTENT(MP_TITLE, mp_parse_title, "abc123", __FILE__, __LINE__);
+  CHECK_TEXT_CONTENT(MP_ARTIST, mp_parse_artist, "abc123", __FILE__, __LINE__);
+  CHECK_TEXT_CONTENT(MP_ALBUM, mp_parse_album, "abc123", __FILE__, __LINE__);
+  CHECK_TEXT_CONTENT(MP_YEAR, mp_parse_year, "2001", __FILE__, __LINE__);
+  CHECK_TEXT_CONTENT(MP_GENRE, mp_parse_genre, "(17)Rock", __FILE__, __LINE__);
+  CHECK_TEXT_CONTENT(MP_TRACK, mp_parse_track, "22", __FILE__, __LINE__);
+  CHECK_COMMENT_CONTENT("abc123", __FILE__, __LINE__);
+  
+  /*mp_free_list(list);
+  mp_free_text_content(text_content);
+  mp_free_comment_content(comment_content);
+  mp_free_content(content);*/
+  
+  printf("%s%s\n", curtest, SUCCESS);
+
+  curtest = "Reading mediamonkey 2.3.1.845 v2 tag...";
+
+  list = mp_get_tag_list_from_fd(fd);
+  if(!list->next) {
+    printf("Could not find v2 tag\n");
+    return 1;
+  }
+  tag = list->tag;
+
+  CHECK_TEXT_CONTENT(MP_TITLE, mp_parse_title, "abc123", __FILE__, __LINE__);
+  CHECK_TEXT_CONTENT(MP_ARTIST, mp_parse_artist, "abc123", __FILE__, __LINE__);
+  CHECK_TEXT_CONTENT(MP_ALBUM, mp_parse_album, "abc123", __FILE__, __LINE__);
+  CHECK_TEXT_CONTENT(MP_YEAR, mp_parse_year, "2001", __FILE__, __LINE__);
+  CHECK_TEXT_CONTENT(MP_GENRE, mp_parse_genre, "(17)Rock", __FILE__, __LINE__);
+  CHECK_TEXT_CONTENT(MP_TRACK, mp_parse_track, "22", __FILE__, __LINE__);
+  CHECK_COMMENT_CONTENT("abc123", __FILE__, __LINE__);
+
+  mp_free_list(list);
+  mp_free_text_content(text_content);
+  mp_free_comment_content(comment_content);
+  mp_free_content(content);
+
+  printf("%s%s\n", curtest, SUCCESS);
+
+  return 0;
+
+ failed:
+  mp_free_list(list);
+  mp_free_text_content(text_content);
+  mp_free_comment_content(comment_content);
+  mp_free_content(content);
+
+  return 1;
 }
 
 
